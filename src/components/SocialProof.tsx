@@ -16,10 +16,25 @@ export default function SocialProof() {
                     <div className="relative w-full overflow-hidden mask-linear-fade">
                         <div className="flex w-max animate-marquee hover:[animation-play-state:paused] group">
                             {[...Array(2)].map((_, i) => (
-                                <div key={i} className="flex space-x-16 mx-8">
-                                    {["Stripe", "Netflix", "Spotify", "Slack", "Intercom", "Notion", "Figma", "Airbnb"].map((brand, j) => (
-                                        <div key={j} className="text-2xl font-bold text-gray-400 group-hover:text-brand-500 transition-colors duration-300 cursor-default grayscale group-hover:grayscale-0">
-                                            {brand}
+                                <div key={i} className="flex space-x-16 mx-8 items-center">
+                                    {[
+                                        { name: "Stripe", url: "https://cdn.simpleicons.org/stripe" },
+                                        { name: "Netflix", url: "https://cdn.simpleicons.org/netflix" },
+                                        { name: "Spotify", url: "https://cdn.simpleicons.org/spotify" },
+                                        { name: "Slack", url: "https://cdn.simpleicons.org/slack" },
+                                        { name: "Intercom", url: "https://cdn.simpleicons.org/intercom" },
+                                        { name: "Notion", url: "https://cdn.simpleicons.org/notion" },
+                                        { name: "Figma", url: "https://cdn.simpleicons.org/figma" },
+                                        { name: "Airbnb", url: "https://cdn.simpleicons.org/airbnb" }
+                                    ].map((brand, j) => (
+                                        <div key={j} className="relative w-32 h-12 flex items-center justify-center grayscale opacity-60 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 cursor-pointer">
+                                            {/* Using Simple Icons CDN for standardized SVGs */}
+                                            <img
+                                                src={brand.url}
+                                                alt={brand.name}
+                                                className="h-8 w-auto object-contain dark:invert"
+                                                loading="lazy"
+                                            />
                                         </div>
                                     ))}
                                 </div>
