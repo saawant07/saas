@@ -1,204 +1,148 @@
 "use client";
 
-import { Search, Sparkles, TrendingUp, BarChart, Users, Share2, Activity } from "lucide-react";
+import { Search, Sparkles, TrendingUp, BarChart, Users, Share2, Activity, ShieldCheck, Zap } from "lucide-react";
+import SpotlightCard from "./ui/SpotlightCard";
 
 export default function Features() {
     return (
-        <section id="features" className="py-20 bg-transparent dark:bg-black">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <section id="features" className="py-24 bg-transparent dark:bg-black relative overflow-hidden">
 
-                {/* Row 1: The Core Value Props (3 Cols) */}
-                <div className="grid lg:grid-cols-3 gap-8">
-                    {/* Card 1 */}
-                    <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                        <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl mb-8 relative flex items-center justify-center overflow-hidden">
-                            <div className="absolute w-[90%] bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4 top-8 left-1/2 -translate-x-1/2">
-                                <div className="flex items-center space-x-2 border-b border-gray-100 dark:border-gray-800 pb-2 mb-2">
-                                    <Search className="h-4 w-4 text-gray-400" />
-                                    <div className="h-2 w-32 bg-gray-100 dark:bg-gray-800 rounded"></div>
-                                </div>
-                                <div className="space-y-2">
-                                    <div className="h-8 bg-blue-50 dark:bg-blue-900/20 rounded w-full"></div>
-                                    <div className="h-2 bg-gray-50 dark:bg-gray-800 rounded w-3/4"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            High-Authority Thread Scout
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                            Don't guess where your customers are. Our engine identifies high-ranking threads that are already pulling in qualified search traffic.
-                        </p>
-                    </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 relative z-10">
 
-                    {/* Card 2 */}
-                    <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                        <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl mb-8 relative flex items-center justify-center overflow-hidden">
-                            <div className="absolute w-[80%] bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center space-x-2">
-                                        <div className="w-6 h-6 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs">r/</div>
-                                        <div className="h-2 w-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                                    </div>
-                                    <div className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] rounded-full font-bold">Positive</div>
-                                </div>
-                                <div className="space-y-1">
-                                    <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded w-full"></div>
-                                    <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded w-5/6"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            Real-Time Sentiment Radar
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                            Instantly detect when your brand or competitors are mentioned. Jump into the conversation precisely when purchase intent is highest.
-                        </p>
-                    </div>
-
-                    {/* Card 3 */}
-                    <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                        <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl mb-8 relative flex items-center justify-center overflow-hidden">
-                            <div className="relative">
-                                <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center z-10 relative">
-                                    <Sparkles className="h-8 w-8 text-brand-500" />
-                                </div>
-                                <div className="absolute inset-0 bg-brand-400 blur-xl opacity-40"></div>
-                            </div>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            Opportunity Discovery Engine
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                            Uncover fresh discussions where users are actively asking for a solution like yours, before your competitors even know they exist.
-                        </p>
-                    </div>
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">
+                        Deep-Scan <span className="text-brand-600">Intelligence Matrix</span>
+                    </h2>
+                    <p className="text-xl text-gray-600 dark:text-gray-400">
+                        Beyond basic listening. We build a complete operational map of your niche's ecosystem.
+                    </p>
                 </div>
 
-                {/* Row 2: Analytics & Insights (3 Cols) */}
-                <div className="grid lg:grid-cols-3 gap-8">
-                    {/* Card 4: Analytics */}
-                    <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                        <div className="h-48 bg-orange-50 dark:bg-gray-800 rounded-2xl mb-8 p-4 relative overflow-hidden">
-                            <div className="grid grid-cols-2 gap-3 h-full">
-                                <div className="bg-white dark:bg-gray-900 rounded-lg p-3 shadow-sm flex flex-col justify-center">
-                                    <div className="text-xs text-gray-500 mb-1">Total Upvotes</div>
-                                    <div className="text-2xl font-bold text-gray-900 dark:text-white">487</div>
-                                    <div className="text-[10px] text-green-500 font-bold">▲ +4.6%</div>
-                                </div>
-                                <div className="bg-white dark:bg-gray-900 rounded-lg p-3 shadow-sm flex flex-col justify-center">
-                                    <div className="text-xs text-gray-500 mb-1">Total Impressions</div>
-                                    <div className="text-2xl font-bold text-gray-900 dark:text-white">261k</div>
-                                    <div className="text-[10px] text-green-500 font-bold">▲ +12.3%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            Deep-Dive Analytics
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                            Stop guessing. Track exact metrics on comment visibility, upvote velocity, and traffic conversion in one dashboard.
-                        </p>
-                    </div>
+                {/* Bento Grid Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-6 gap-6 auto-rows-[minmax(180px,auto)]">
 
-                    {/* Card 5: Subreddit Insights */}
-                    <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                        <div className="h-48 bg-orange-50 dark:bg-gray-800 rounded-2xl mb-8 p-4 relative overflow-hidden flex flex-col">
-                            <div className="bg-white dark:bg-gray-900 rounded-t-lg p-2 border-b border-gray-100 text-[10px] font-bold text-gray-400 flex justify-between">
-                                <span>Subreddit</span>
-                                <span>Upvotes</span>
+                    {/* Card 1: Subreddit Heatmap (Large, Col-span-4) */}
+                    <SpotlightCard className="md:col-span-4 rounded-3xl p-8 bg-white dark:bg-white/5 backdrop-blur-xl border-gray-200 dark:border-white/10 group overflow-hidden shadow-sm dark:shadow-none">
+                        <div className="flex flex-col h-full justify-between relative z-10">
+                            <div>
+                                <div className="flex items-center space-x-2 mb-4">
+                                    <Activity className="h-5 w-5 text-brand-500" />
+                                    <span className="text-sm font-mono text-brand-600 dark:text-brand-400 uppercase tracking-widest">Live Traffic Heatmap</span>
+                                </div>
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Community Intelligence</h3>
+                                <p className="text-gray-600 dark:text-gray-400 max-w-md">Identify high-velocity discussions across 50,000+ niche communities in real-time.</p>
                             </div>
-                            <div className="bg-white dark:bg-gray-900 flex-1 p-2 space-y-2">
-                                {['r/SEO', 'r/Marketing', 'r/SaaS'].map((sub, i) => (
-                                    <div key={i} className="flex justify-between items-center text-[10px]">
-                                        <span className="font-medium text-gray-700 dark:text-gray-300">{sub}</span>
-                                        <span className="font-mono text-gray-500">{1000 - i * 200}</span>
+
+                            {/* Visual Grid */}
+                            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                {['r/SaaS', 'r/Marketing', 'r/Entrepreneur', 'r/Startups', 'r/TechSEO', 'r/Growth', 'r/SideProject', 'r/SmallBiz'].map((sub, i) => (
+                                    <div key={i} className="bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-100 dark:border-white/5 rounded-lg p-3 transition-colors flex flex-col justify-between group/item cursor-default">
+                                        <div className="flex justify-between items-start mb-2">
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-300">{sub}</span>
+                                            <div className={`w-2 h-2 rounded-full ${i < 3 ? 'bg-green-500 animate-pulse' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
+                                        </div>
+                                        <div className="text-[10px] text-gray-500 flex justify-between">
+                                            <span>Active</span>
+                                            <span className="text-brand-600 dark:text-brand-400 group-hover/item:text-brand-500 dark:group-hover/item:text-brand-300 transition-colors">{850 - i * 80}+</span>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            Community Intelligence
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                            Navigate subreddit rules with confidence. Know exactly where your links are welcome and how to engage without being flagged.
-                        </p>
-                    </div>
+                        {/* Background Gradient */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 dark:bg-brand-500/10 rounded-full blur-[80px] -z-10 pointer-events-none"></div>
+                    </SpotlightCard>
 
-                    {/* Card 6: Unlimited Onboarding */}
-                    <div className="bg-gradient-to-br from-orange-400 to-orange-600 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden text-white relative">
-                        <div className="h-48 relative mb-8 flex items-center justify-center">
-                            {/* Visual node graph */}
-                            <div className="relative z-10">
-                                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                                    <Share2 className="h-6 w-6 text-orange-500" />
-                                </div>
-                                {/* Orbiting nodes */}
-                                <div className="absolute top-0 left-0 w-full h-full animate-spin-slow">
-                                    <div className="absolute -top-8 -left-8 bg-white/20 backdrop-blur-md rounded-lg px-2 py-1 text-xs">Client 1</div>
-                                    <div className="absolute -bottom-8 -right-8 bg-white/20 backdrop-blur-md rounded-lg px-2 py-1 text-xs">Client 2</div>
+                    {/* Card 2: Aged Account Status (Col-span-2) */}
+                    <SpotlightCard className="md:col-span-2 rounded-3xl p-8 bg-white dark:bg-white/5 backdrop-blur-xl border-gray-200 dark:border-white/10 flex flex-col justify-between group shadow-sm dark:shadow-none">
+                        <div>
+                            <div className="flex items-center space-x-2 mb-4">
+                                <ShieldCheck className="h-5 w-5 text-brand-500" />
+                                <span className="text-sm font-mono text-brand-600 dark:text-brand-400 uppercase tracking-widest">Authority</span>
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Aged Account Access</h3>
+                            <p className="text-gray-600 dark:text-gray-400 text-sm">Skip the "Account Too New" filter.</p>
+                        </div>
+
+                        <div className="mt-6 bg-gray-50 dark:bg-black/40 rounded-xl p-4 border border-gray-100 dark:border-white/5 relative overflow-hidden">
+                            <div className="flex items-center space-x-4 mb-3">
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 border border-white/50 dark:border-white/10"></div>
+                                <div>
+                                    <div className="h-2.5 w-20 bg-gray-200 dark:bg-gray-700 rounded mb-1.5"></div>
+                                    <div className="h-2 w-12 bg-gray-300 dark:bg-gray-800 rounded"></div>
                                 </div>
                             </div>
-                            <div className="absolute inset-0 bg-white/10 rounded-full blur-3xl scale-150"></div>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3">
-                            Multi-Client Command Center
-                        </h3>
-                        <p className="text-orange-50 text-sm leading-relaxed">
-                            Built for scale. Manage unlimited client profiles and campaigns from a centralized, streamlined interface.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Row 3: Deep Dives (2 Cols) */}
-                <div className="grid lg:grid-cols-2 gap-8">
-                    {/* Card 7: Smart Comment Boosting */}
-                    <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 group">
-                        <div className="mb-4">
-                            <span className="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full">
-                                Organic Visibility
-                            </span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                            Precision Engagement Algorithm
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                            Our algorithm helps your contributions rise naturally to the top, ensuring maximum visibility without tripping spam filters.
-                        </p>
-                        <div className="w-full h-32 bg-orange-50 dark:bg-gray-800 rounded-xl relative overflow-hidden">
-                            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/80 to-transparent"></div>
-                            <div className="p-4 flex items-center space-x-3">
-                                <div className="bg-white p-2 rounded shadow-sm">
-                                    <TrendingUp className="h-5 w-5 text-green-500" />
-                                </div>
-                                <div className="h-2 bg-gray-200 w-24 rounded"></div>
+                            <div className="flex justify-between items-center text-xs">
+                                <div className="px-2 py-1 bg-brand-50 dark:bg-brand-500/20 text-brand-700 dark:text-brand-300 rounded border border-brand-200 dark:border-brand-500/20">Top 1% Karma</div>
+                                <span className="text-gray-500">5y 2m</span>
                             </div>
                         </div>
-                    </div>
+                    </SpotlightCard>
 
-                    {/* Card 8: Rank on AI LLMs */}
-                    <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 group">
-                        <div className="mb-4">
-                            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-600 text-xs font-bold rounded-full">
-                                AI SEO
-                            </span>
+                    {/* Card 3: LLM Citation Score (Col-span-2) */}
+                    <SpotlightCard className="md:col-span-2 rounded-3xl p-8 bg-white dark:bg-white/5 backdrop-blur-xl border-gray-200 dark:border-white/10 flex flex-col justify-between shadow-sm dark:shadow-none">
+                        <div>
+                            <div className="flex items-center space-x-2 mb-4">
+                                <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                                <span className="text-sm font-mono text-purple-600 dark:text-purple-400 uppercase tracking-widest">AI SEO</span>
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">LLM Trust Score</h3>
+                            <p className="text-gray-600 dark:text-gray-400 text-sm">Rank where ChatGPT looks.</p>
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                            Dominate AI Search Results
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                            Secure your place in the future of search. By ranking on Reddit, you automatically become a trusted source for ChatGPT and Gemini.
-                        </p>
-                        <div className="w-full h-32 bg-purple-50 dark:bg-gray-800 rounded-xl relative overflow-hidden p-4">
-                            <div className="flex space-x-2">
-                                <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs">AI</div>
-                                <div className="space-y-2 flex-1 pt-1">
-                                    <div className="h-2 bg-purple-200 dark:bg-purple-900 w-full rounded"></div>
-                                    <div className="h-2 bg-purple-200 dark:bg-purple-900 w-3/4 rounded"></div>
+
+                        <div className="mt-6 flex items-center justify-center relative">
+                            <div className="text-5xl font-bold text-gray-900 dark:text-white tracking-tighter">98<span className="text-2xl text-gray-400 dark:text-gray-500">%</span></div>
+                            <div className="absolute inset-0 bg-purple-500/10 dark:bg-purple-500/20 blur-2xl rounded-full"></div>
+                        </div>
+                        <div className="text-center text-xs text-purple-700 dark:text-purple-300 mt-2 font-mono">High Confidence Verification</div>
+                    </SpotlightCard>
+
+                    {/* Card 4: Opportunity Discovery (Large, Col-span-4) */}
+                    <SpotlightCard className="md:col-span-4 rounded-3xl p-8 bg-white dark:bg-white/5 backdrop-blur-xl border-gray-200 dark:border-white/10 relative overflow-hidden shadow-sm dark:shadow-none">
+                        <div className="grid md:grid-cols-2 gap-8 h-full items-center relative z-10">
+                            <div>
+                                <div className="flex items-center space-x-2 mb-4">
+                                    <Zap className="h-5 w-5 text-yellow-500" />
+                                    <span className="text-sm font-mono text-yellow-600 dark:text-yellow-500 uppercase tracking-widest">Instant Alerts</span>
+                                </div>
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Opportunity Discovery Engine</h3>
+                                <p className="text-gray-600 dark:text-gray-400 mb-6">Uncover fresh discussions where users are actively asking for a solution like yours, before your competitors even know they exist.</p>
+                                <div className="flex items-center text-sm text-gray-500 space-x-4">
+                                    <span className="flex items-center"><div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>Real-time</span>
+                                    <span className="flex items-center"><div className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2"></div>High Intent</span>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 dark:bg-black/40 rounded-xl border border-gray-100 dark:border-white/5 p-4 relative">
+                                {/* Simulated Chat Items */}
+                                <div className="space-y-3">
+                                    <div className="flex items-start space-x-3 opacity-50">
+                                        <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                                        <div className="space-y-1">
+                                            <div className="h-2 w-32 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                            <div className="h-2 w-48 bg-gray-300 dark:bg-gray-800 rounded"></div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start space-x-3 bg-white dark:bg-white/5 p-3 rounded-lg border border-brand-200 dark:border-brand-500/30 relative shadow-sm dark:shadow-none">
+                                        <div className="absolute -left-1 top-4 w-1 h-8 bg-brand-500 rounded-full"></div>
+                                        <div className="w-6 h-6 rounded-full bg-indigo-500"></div>
+                                        <div className="space-y-1.5">
+                                            <div className="h-2 w-24 bg-gray-200 dark:bg-gray-600 rounded"></div>
+                                            <div className="text-xs text-gray-600 dark:text-gray-300">"Does anyone know an alternative to [Competitor] that supports..."</div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start space-x-3 opacity-50">
+                                        <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                                        <div className="space-y-1">
+                                            <div className="h-2 w-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                            <div className="h-2 w-40 bg-gray-300 dark:bg-gray-800 rounded"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SpotlightCard>
+
                 </div>
             </div>
         </section>

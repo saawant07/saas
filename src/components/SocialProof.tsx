@@ -2,37 +2,39 @@
 
 import { TrendingUp, CheckCircle } from "lucide-react";
 
+const logos = [
+    { name: "Stripe", url: "https://cdn.simpleicons.org/stripe" },
+    { name: "Netflix", url: "https://cdn.simpleicons.org/netflix" },
+    { name: "Spotify", url: "https://cdn.simpleicons.org/spotify" },
+    { name: "Slack", url: "https://cdn.simpleicons.org/slack" },
+    { name: "Intercom", url: "https://cdn.simpleicons.org/intercom" },
+    { name: "Notion", url: "https://cdn.simpleicons.org/notion" },
+    { name: "Figma", url: "https://cdn.simpleicons.org/figma" },
+    { name: "Airbnb", url: "https://cdn.simpleicons.org/airbnb" }
+];
+
 export default function SocialProof() {
     return (
-        <section className="py-20 bg-transparent dark:bg-black overflow-hidden">
+        <section className="py-24 bg-transparent dark:bg-black overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
 
-                {/* Trusted By Marquee */}
+                {/* Trusted By Marquee - Double Row */}
                 <div className="mb-24">
-                    <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-widest mb-8">
+                    <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-widest mb-12">
                         Trusted by industry leaders
                     </p>
 
-                    <div className="relative w-full overflow-hidden mask-linear-fade">
+                    <div className="relative w-full overflow-hidden mask-linear-fade space-y-4">
+                        {/* Row 1 - Normal Direction */}
                         <div className="flex w-max animate-marquee hover:[animation-play-state:paused] group">
                             {[...Array(2)].map((_, i) => (
-                                <div key={i} className="flex space-x-16 mx-8 items-center">
-                                    {[
-                                        { name: "Stripe", url: "https://cdn.simpleicons.org/stripe" },
-                                        { name: "Netflix", url: "https://cdn.simpleicons.org/netflix" },
-                                        { name: "Spotify", url: "https://cdn.simpleicons.org/spotify" },
-                                        { name: "Slack", url: "https://cdn.simpleicons.org/slack" },
-                                        { name: "Intercom", url: "https://cdn.simpleicons.org/intercom" },
-                                        { name: "Notion", url: "https://cdn.simpleicons.org/notion" },
-                                        { name: "Figma", url: "https://cdn.simpleicons.org/figma" },
-                                        { name: "Airbnb", url: "https://cdn.simpleicons.org/airbnb" }
-                                    ].map((brand, j) => (
-                                        <div key={j} className="relative w-32 h-12 flex items-center justify-center grayscale opacity-60 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 cursor-pointer">
-                                            {/* Using Simple Icons CDN for standardized SVGs */}
+                                <div key={i} className="flex space-x-4 mx-2">
+                                    {logos.map((brand, j) => (
+                                        <div key={j} className="relative w-40 h-20 rounded-xl bg-white/50 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 flex items-center justify-center grayscale opacity-60 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 hover:bg-white/80 dark:hover:bg-white/10 cursor-pointer hover:scale-105 shadow-sm dark:shadow-none">
                                             <img
                                                 src={brand.url}
                                                 alt={brand.name}
-                                                className="h-8 w-auto object-contain dark:invert"
+                                                className="h-8 w-auto object-contain dark:invert opacity-80"
                                                 loading="lazy"
                                             />
                                         </div>
@@ -40,9 +42,28 @@ export default function SocialProof() {
                                 </div>
                             ))}
                         </div>
+
+                        {/* Row 2 - Reverse Direction */}
+                        <div className="flex w-max animate-marquee-reverse hover:[animation-play-state:paused] group">
+                            {[...Array(2)].map((_, i) => (
+                                <div key={i} className="flex space-x-4 mx-2">
+                                    {logos.reverse().map((brand, j) => (
+                                        <div key={j} className="relative w-40 h-20 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center grayscale opacity-60 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 hover:bg-white/10 cursor-pointer hover:scale-105">
+                                            <img
+                                                src={brand.url}
+                                                alt={brand.name}
+                                                className="h-8 w-auto object-contain dark:invert opacity-80"
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+
                         {/* Gradient Masks */}
-                        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white dark:from-black to-transparent pointer-events-none"></div>
-                        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white dark:from-black to-transparent pointer-events-none"></div>
+                        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white dark:from-black to-transparent pointer-events-none z-10"></div>
+                        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white dark:from-black to-transparent pointer-events-none z-10"></div>
                     </div>
                 </div>
 

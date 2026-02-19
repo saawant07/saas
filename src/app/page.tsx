@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import OpportunityReport from "@/components/OpportunityReport";
+import RedditScanner from "@/components/demos/RedditScanner";
 import SocialProof from "@/components/SocialProof";
 import Features from "@/components/Features";
 import Pricing from "@/components/Pricing";
@@ -13,7 +13,7 @@ export default function Home() {
     <main className="min-h-screen selection:bg-brand-500/30">
       <Navbar />
       <Hero />
-      <OpportunityReport />
+      <RedditScanner />
       <SocialProof />
       <Features />
       <Pricing />

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, CheckCircle, Play, Star } from "lucide-react";
+import { ArrowRight, CheckCircle, Star, TrendingUp, AlertCircle } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect } from "react";
 
@@ -13,47 +13,43 @@ export default function Hero() {
     const springX = useSpring(mouseX, springConfig);
     const springY = useSpring(mouseY, springConfig);
 
-    // Subtle parallax for background blobs
-    const backgroundX = useTransform(springX, [-0.5, 0.5], ["2%", "-2%"]);
-    const backgroundY = useTransform(springY, [-0.5, 0.5], ["2%", "-2%"]);
-
-    // Subtle parallax for the main content card to give it depth
-    const cardRotateX = useTransform(springY, [-0.5, 0.5], [1, -1]);
-    const cardRotateY = useTransform(springX, [-0.5, 0.5], [-1, 1]);
-
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            // Normalize mouse position to -0.5 to 0.5 based on window center
             const x = (e.clientX / window.innerWidth) - 0.5;
             const y = (e.clientY / window.innerHeight) - 0.5;
             mouseX.set(x);
             mouseY.set(y);
         };
-
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, [mouseX, mouseY]);
 
+    // Simulated "Live" Threads Data
+    const liveThreads = [
+        { r: "r/SaaS", title: "Best organic marketing tools?", intent: "High", time: "2m ago" },
+        { r: "r/Entrepreneur", title: "How to validate my idea?", intent: "Medium", time: "5m ago" },
+        { r: "r/Marketing", title: "Reddit vs FB Ads for B2B?", intent: "High", time: "12m ago" },
+    ];
+
     return (
         <section className="relative pt-32 pb-12 lg:pt-48 lg:pb-20 overflow-hidden">
-            {/* Background Gradients with Parallax */}
+            {/* Restored Background Gradients */}
             <div className="absolute inset-0 -z-10 pointer-events-none">
                 <motion.div
                     style={{ x: useTransform(springX, [-0.5, 0.5], ["5%", "-5%"]), y: useTransform(springY, [-0.5, 0.5], ["5%", "-5%"]) }}
                     className="absolute top-0 right-0 w-3/4 h-[800px] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-50/50 via-transparent to-transparent dark:from-brand-900/10 opacity-70"
-                ></motion.div>
+                />
                 <motion.div
                     style={{ x: useTransform(springX, [-0.5, 0.5], ["-5%", "5%"]), y: useTransform(springY, [-0.5, 0.5], ["-5%", "5%"]) }}
                     className="absolute bottom-0 left-0 w-1/2 h-[600px] bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-brand-50/30 via-transparent to-transparent dark:from-brand-900/5 opacity-50"
-                ></motion.div>
+                />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
-                    {/* Left Column: Content */}
+                    {/* Left Column: Original Content & Layout */}
                     <div className="flex-1 space-y-8 text-left">
-
                         {/* Trusted Badge */}
                         <div className="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-md dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 rounded-full px-4 py-1.5 shadow-sm transition-all hover:bg-white/80 dark:hover:bg-gray-900/80 cursor-default">
                             <div className="flex -space-x-2">
@@ -105,108 +101,98 @@ export default function Hero() {
                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform text-brand-500" />
                             </Link>
                         </div>
-
-                        {/* Trusted Logos Strip */}
-                        <div className="pt-10 border-t border-gray-200/60 dark:border-gray-800/60 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Trusted By</p>
-                            <div className="flex items-center space-x-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                                {/* Using text for now to match style, but styled more professionally */}
-                                <span className="text-lg font-black font-sans text-gray-400 hover:text-indigo-600">Acme</span>
-                                <span className="text-lg font-bold font-serif text-gray-400 hover:text-emerald-600">Globex</span>
-                                <span className="text-lg font-extrabold font-mono text-gray-400 hover:text-blue-600">Soylent</span>
-                                <span className="text-lg font-bold text-gray-400 hover:text-brand-600 italic">Initech</span>
-                                <span className="text-lg font-semibold font-sans text-gray-400 hover:text-purple-600 tracking-tighter">Umbrella</span>
-                            </div>
-                        </div>
-
                     </div>
 
-                    {/* Right Column: Visual/Video */}
-                    <motion.div
-                        className="flex-1 relative perspective-1000"
-                        style={{
-                            rotateX: cardRotateX,
-                            rotateY: cardRotateY,
-                        }}
-                    >
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800 group cursor-pointer aspect-video bg-gray-900 hover:shadow-brand-500/20 transition-all duration-500">
-                            {/* Placeholder for Video Thumbnail */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-brand-900/90 via-gray-900/80 to-black/60 z-10"></div>
+                    {/* Right Column: New "Amazing" Product Visual */}
+                    <div className="flex-1 w-full max-w-md lg:max-w-full relative perspective-1000">
+                        {/* Background Decoration */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-brand-500/10 rounded-full blur-[80px] -z-10 dark:bg-brand-900/20"></div>
 
-                            {/* Texture/Pattern Overlay */}
-                            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] z-10 mix-blend-overlay"></div>
-
-                            {/* Simulated Video Content */}
-                            <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center p-6">
-                                <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-6 shadow-2xl ring-1 ring-white/30 group-hover:scale-110 transition-transform duration-300 group-hover:bg-brand-600/90 group-hover:ring-brand-400">
-                                    <Play className="w-8 h-8 text-white fill-current ml-1" />
+                        {/* Main Glass Dashboard Card */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30, rotateX: 10 }}
+                            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-white/20 dark:border-gray-800 rounded-3xl shadow-2xl overflow-hidden"
+                        >
+                            {/* Header */}
+                            <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-white/50 dark:bg-black/20">
+                                <div className="flex items-center space-x-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                                    <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <div className="w-3 h-3 rounded-full bg-green-400"></div>
                                 </div>
-                                <h3 className="text-white text-3xl md:text-4xl font-black uppercase tracking-tighter drop-shadow-2xl">
-                                    Scale Your <br />
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-200 to-brand-500">Organic Growth</span>
-                                </h3>
-                                <p className="text-white/70 mt-3 font-medium tracking-wide text-sm">See the engine in action</p>
+                                <div className="text-[10px] font-mono text-gray-400 uppercase tracking-widest flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                                    Scanner Active
+                                </div>
                             </div>
 
-                            {/* Decorative Floating Nodes */}
-                            <div className="absolute bottom-10 left-10 flex space-x-4 z-10">
-                                {/* Icon 1: GPT */}
-                                <motion.div
-                                    animate={{ y: [-5, 5] }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        repeatType: "reverse",
-                                        ease: "easeInOut",
-                                    }}
-                                    className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg"
-                                >
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" className="w-6 h-6" alt="GPT" />
-                                </motion.div>
+                            {/* Content: List of "Detected" Threads */}
+                            <div className="p-4 space-y-3 pb-20">
+                                {liveThreads.map((thread, i) => (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.4 + i * 0.2 }}
+                                        className="group flex items-start gap-4 p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 hover:border-brand-200 dark:hover:border-brand-900 shadow-sm hover:shadow-md transition-all cursor-pointer relative overflow-hidden"
+                                    >
+                                        <div className="absolute inset-0 bg-brand-50 dark:bg-brand-900/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                                {/* Icon 2: Brand Node */}
-                                <motion.div
-                                    animate={{ y: [-8, 8] }}
-                                    transition={{
-                                        duration: 4,
-                                        repeat: Infinity,
-                                        repeatType: "reverse",
-                                        ease: "easeInOut",
-                                        delay: 0.5,
-                                    }}
-                                    className="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center shadow-lg"
-                                >
-                                    <div className="w-6 h-6 rounded-full bg-brand-500"></div>
-                                </motion.div>
+                                        {/* Icon */}
+                                        <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 z-10 text-orange-600">
+                                            <span className="font-bold text-xs">r/</span>
+                                        </div>
 
-                                {/* Icon 3: Reddit */}
+                                        {/* Text */}
+                                        <div className="flex-1 min-w-0 z-10">
+                                            <div className="flex justify-between items-center mb-1">
+                                                <span className="text-[10px] font-bold text-gray-500 uppercase">{thread.r} • {thread.time}</span>
+                                                <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold border ${thread.intent === 'High' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-yellow-50 text-yellow-700 border-yellow-100'}`}>
+                                                    {thread.intent} Intent
+                                                </span>
+                                            </div>
+                                            <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate group-hover:text-brand-600 transition-colors">
+                                                {thread.title}
+                                            </h4>
+                                        </div>
+                                    </motion.div>
+                                ))}
+
+                                {/* Simulated "New Match" Toast */}
                                 <motion.div
-                                    animate={{ y: [-6, 6] }}
-                                    transition={{
-                                        duration: 3.5,
-                                        repeat: Infinity,
-                                        repeatType: "reverse",
-                                        ease: "easeInOut",
-                                        delay: 1,
-                                    }}
-                                    className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center shadow-lg"
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 1.5, repeat: Infinity, repeatType: "reverse", repeatDelay: 4, duration: 4 }}
+                                    className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 rounded-full shadow-xl flex items-center gap-2 text-xs font-bold z-30 w-max max-w-[90%]"
                                 >
-                                    <img src="https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" className="w-6 h-6" alt="Reddit" />
+                                    <AlertCircle className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+                                    <span className="truncate">New High-Intent Opportunity Found!</span>
                                 </motion.div>
                             </div>
-                        </div>
 
-                        {/* Arrow pointing to video - Keep CSS animation for simplicity here as it's separate */}
-                        <div className="absolute -bottom-12 -left-12 hidden lg:block animate-fade-in [animation-delay:800ms]">
-                            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-400 transform rotate-12">
-                                <path d="M10 90 Q 50 10 90 50" stroke="currentColor" strokeWidth="2" strokeDasharray="5 5" fill="none" />
-                                <path d="M90 50 L 80 45 M 90 50 L 85 60" stroke="currentColor" strokeWidth="2" fill="none" />
-                            </svg>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 p-2 rounded shadow-sm text-xs text-brand-600 font-bold -rotate-12 border border-brand-100">
-                                Watch this<br />quick video
+                            {/* Faded bottom to imply scroll */}
+                            <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
+                        </motion.div>
+
+                        {/* Floating Stats Card - Parallax Element */}
+                        <motion.div
+                            style={{
+                                y: useTransform(springY, [-0.5, 0.5], [-20, 20]),
+                                x: useTransform(springX, [-0.5, 0.5], [-10, 10])
+                            }}
+                            className="absolute -right-6 -bottom-6 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 w-48 z-20 hidden md:block"
+                        >
+                            <div className="flex items-center gap-2 mb-2">
+                                <TrendingUp className="w-4 h-4 text-green-500" />
+                                <span className="text-xs font-bold text-gray-500">Traffic Potential</span>
                             </div>
-                        </div>
-                    </motion.div>
+                            <div className="text-2xl font-black text-gray-900 dark:text-white">12.5k</div>
+                            <div className="text-[10px] text-green-600 font-medium">+142% vs last week</div>
+                        </motion.div>
+                    </div>
+
                 </div>
             </div>
         </section>

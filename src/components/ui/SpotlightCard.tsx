@@ -1,7 +1,6 @@
-"use client";
-
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { MouseEvent } from "react";
+import { cn } from "@/lib/utils";
 
 export default function SpotlightCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
     const mouseX = useMotionValue(0);
@@ -15,7 +14,10 @@ export default function SpotlightCard({ children, className = "" }: { children: 
 
     return (
         <div
-            className={`group relative border border-white/10 bg-gray-900 overflow-hidden ${className}`}
+            className={cn(
+                "group relative border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 overflow-hidden",
+                className
+            )}
             onMouseMove={handleMouseMove}
         >
             <motion.div
@@ -24,7 +26,7 @@ export default function SpotlightCard({ children, className = "" }: { children: 
                     background: useMotionTemplate`
             radial-gradient(
               650px circle at ${mouseX}px ${mouseY}px,
-              rgba(249, 115, 22, 0.15),
+              rgba(234, 88, 12, 0.08),
               transparent 80%
             )
           `,
