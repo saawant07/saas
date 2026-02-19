@@ -7,6 +7,30 @@ export default function SocialProof() {
         <section className="py-20 bg-transparent dark:bg-black overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
 
+                {/* Trusted By Marquee */}
+                <div className="mb-24">
+                    <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-widest mb-8">
+                        Trusted by industry leaders
+                    </p>
+
+                    <div className="relative w-full overflow-hidden mask-linear-fade">
+                        <div className="flex w-max animate-marquee hover:[animation-play-state:paused] group">
+                            {[...Array(2)].map((_, i) => (
+                                <div key={i} className="flex space-x-16 mx-8">
+                                    {["Stripe", "Netflix", "Spotify", "Slack", "Intercom", "Notion", "Figma", "Airbnb"].map((brand, j) => (
+                                        <div key={j} className="text-2xl font-bold text-gray-400 group-hover:text-brand-500 transition-colors duration-300 cursor-default grayscale group-hover:grayscale-0">
+                                            {brand}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                        {/* Gradient Masks */}
+                        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white dark:from-black to-transparent pointer-events-none"></div>
+                        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white dark:from-black to-transparent pointer-events-none"></div>
+                    </div>
+                </div>
+
                 {/* Part 1: Traffic Growth */}
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     <div className="flex-1 space-y-8">
