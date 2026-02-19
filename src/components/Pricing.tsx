@@ -1,6 +1,8 @@
 "use client";
 
 import { Check } from "lucide-react";
+import { motion } from "framer-motion";
+import MagneticButton from "./ui/MagneticButton";
 
 const plans = [
     {
@@ -58,9 +60,13 @@ export default function Pricing() {
 
                 <div className="grid md:grid-cols-3 gap-8 items-center">
                     {plans.map((plan, index) => (
-                        <div
+                        <motion.div
                             key={index}
-                            className={`relative p-8 rounded-2xl border transition-all duration-300 group ${plan.highlighted
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            className={`relative p-8 rounded-2xl border transition-all duration-300 group hover-card-glow ${plan.highlighted
                                 ? "border-brand-500 shadow-2xl scale-105 z-10 bg-white dark:bg-gray-900 hover:scale-110 hover:shadow-brand-500/20"
                                 : "border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 hover:bg-white dark:hover:bg-gray-900 hover:scale-105 hover:shadow-xl hover:border-brand-200 dark:hover:border-brand-800"
                                 }`}
@@ -79,14 +85,14 @@ export default function Pricing() {
                                 <span className="text-gray-500 dark:text-gray-400 ml-1">{plan.period}</span>
                             </div>
 
-                            <button
-                                className={`w-full py-3 rounded-lg font-medium transition-all duration-300 mb-8 transform group-hover:-translate-y-1 ${plan.highlighted
+                            <MagneticButton
+                                className={`w-full py-3 rounded-lg font-medium transition-all duration-300 mb-8 transform ${plan.highlighted
                                     ? "bg-brand-600 hover:bg-brand-700 text-white shadow-lg hover:shadow-brand-500/25"
                                     : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-brand-500 hover:text-brand-600 text-gray-900 dark:text-white"
                                     }`}
                             >
                                 Get Started
-                            </button>
+                            </MagneticButton>
 
                             <ul className="space-y-4">
                                 {plan.features.map((feature, i) => (
@@ -98,7 +104,7 @@ export default function Pricing() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

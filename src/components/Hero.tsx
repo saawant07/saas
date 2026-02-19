@@ -2,14 +2,50 @@
 
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Play, Star } from "lucide-react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect } from "react";
 
 export default function Hero() {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springConfig = { damping: 25, stiffness: 120 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
+
+    // Subtle parallax for background blobs
+    const backgroundX = useTransform(springX, [-0.5, 0.5], ["2%", "-2%"]);
+    const backgroundY = useTransform(springY, [-0.5, 0.5], ["2%", "-2%"]);
+
+    // Subtle parallax for the main content card to give it depth
+    const cardRotateX = useTransform(springY, [-0.5, 0.5], [1, -1]);
+    const cardRotateY = useTransform(springX, [-0.5, 0.5], [-1, 1]);
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            // Normalize mouse position to -0.5 to 0.5 based on window center
+            const x = (e.clientX / window.innerWidth) - 0.5;
+            const y = (e.clientY / window.innerHeight) - 0.5;
+            mouseX.set(x);
+            mouseY.set(y);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+    }, [mouseX, mouseY]);
+
     return (
         <section className="relative pt-32 pb-12 lg:pt-48 lg:pb-20 overflow-hidden">
-            {/* Background Gradients */}
+            {/* Background Gradients with Parallax */}
             <div className="absolute inset-0 -z-10 pointer-events-none">
-                <div className="absolute top-0 right-0 w-3/4 h-[800px] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-50/50 via-transparent to-transparent dark:from-brand-900/10 opacity-70"></div>
-                <div className="absolute bottom-0 left-0 w-1/2 h-[600px] bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-brand-50/30 via-transparent to-transparent dark:from-brand-900/5 opacity-50"></div>
+                <motion.div
+                    style={{ x: useTransform(springX, [-0.5, 0.5], ["5%", "-5%"]), y: useTransform(springY, [-0.5, 0.5], ["5%", "-5%"]) }}
+                    className="absolute top-0 right-0 w-3/4 h-[800px] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-50/50 via-transparent to-transparent dark:from-brand-900/10 opacity-70"
+                ></motion.div>
+                <motion.div
+                    style={{ x: useTransform(springX, [-0.5, 0.5], ["-5%", "5%"]), y: useTransform(springY, [-0.5, 0.5], ["-5%", "5%"]) }}
+                    className="absolute bottom-0 left-0 w-1/2 h-[600px] bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-brand-50/30 via-transparent to-transparent dark:from-brand-900/5 opacity-50"
+                ></motion.div>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,8 +122,14 @@ export default function Hero() {
                     </div>
 
                     {/* Right Column: Visual/Video */}
-                    <div className="flex-1 relative perspective-1000">
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800 group cursor-pointer aspect-video bg-gray-900 hover:shadow-brand-500/20 transition-all duration-500 transform hover:rotate-y-2 hover:scale-[1.01]">
+                    <motion.div
+                        className="flex-1 relative perspective-1000"
+                        style={{
+                            rotateX: cardRotateX,
+                            rotateY: cardRotateY,
+                        }}
+                    >
+                        <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800 group cursor-pointer aspect-video bg-gray-900 hover:shadow-brand-500/20 transition-all duration-500">
                             {/* Placeholder for Video Thumbnail */}
                             <div className="absolute inset-0 bg-gradient-to-tr from-brand-900/90 via-gray-900/80 to-black/60 z-10"></div>
 
@@ -106,15 +148,55 @@ export default function Hero() {
                                 <p className="text-white/70 mt-3 font-medium tracking-wide text-sm">See the engine in action</p>
                             </div>
 
-                            {/* Decorative nodes connecting logos (Visual flair from screenshot) */}
-                            <div className="absolute bottom-10 left-10 flex space-x-4 z-10 animate-fade-in-up [animation-delay:500ms]">
-                                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg animate-float"><img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" className="w-6 h-6" alt="GPT" /></div>
-                                <div className="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center shadow-lg animate-float [animation-delay:1s]"><div className="w-6 h-6 rounded-full bg-brand-500"></div></div>
-                                <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center shadow-lg animate-float [animation-delay:2s]"><img src="https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" className="w-6 h-6" alt="Reddit" /></div>
+                            {/* Decorative Floating Nodes */}
+                            <div className="absolute bottom-10 left-10 flex space-x-4 z-10">
+                                {/* Icon 1: GPT */}
+                                <motion.div
+                                    animate={{ y: [-5, 5] }}
+                                    transition={{
+                                        duration: 3,
+                                        repeat: Infinity,
+                                        repeatType: "reverse",
+                                        ease: "easeInOut",
+                                    }}
+                                    className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg"
+                                >
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" className="w-6 h-6" alt="GPT" />
+                                </motion.div>
+
+                                {/* Icon 2: Brand Node */}
+                                <motion.div
+                                    animate={{ y: [-8, 8] }}
+                                    transition={{
+                                        duration: 4,
+                                        repeat: Infinity,
+                                        repeatType: "reverse",
+                                        ease: "easeInOut",
+                                        delay: 0.5,
+                                    }}
+                                    className="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center shadow-lg"
+                                >
+                                    <div className="w-6 h-6 rounded-full bg-brand-500"></div>
+                                </motion.div>
+
+                                {/* Icon 3: Reddit */}
+                                <motion.div
+                                    animate={{ y: [-6, 6] }}
+                                    transition={{
+                                        duration: 3.5,
+                                        repeat: Infinity,
+                                        repeatType: "reverse",
+                                        ease: "easeInOut",
+                                        delay: 1,
+                                    }}
+                                    className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center shadow-lg"
+                                >
+                                    <img src="https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" className="w-6 h-6" alt="Reddit" />
+                                </motion.div>
                             </div>
                         </div>
 
-                        {/* Arrow pointing to video */}
+                        {/* Arrow pointing to video - Keep CSS animation for simplicity here as it's separate */}
                         <div className="absolute -bottom-12 -left-12 hidden lg:block animate-fade-in [animation-delay:800ms]">
                             <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-400 transform rotate-12">
                                 <path d="M10 90 Q 50 10 90 50" stroke="currentColor" strokeWidth="2" strokeDasharray="5 5" fill="none" />
@@ -124,8 +206,7 @@ export default function Hero() {
                                 Watch this<br />quick video
                             </div>
                         </div>
-                    </div>
-
+                    </motion.div>
                 </div>
             </div>
         </section>

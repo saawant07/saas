@@ -1,6 +1,7 @@
 "use client";
 
 import { FileText } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function OpportunityReport() {
     return (
@@ -27,6 +28,19 @@ export default function OpportunityReport() {
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
+                {/* Scanning Beam Animation */}
+                <motion.div
+                    className="absolute top-0 bottom-0 w-2 bg-gradient-to-b from-transparent via-brand-400 to-transparent opacity-30 z-0 blur-sm"
+                    animate={{ left: ["-20%", "120%"] }}
+                    transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                        repeatDelay: 0.5
+                    }}
+                    style={{ skewX: -20 }}
+                />
+
                 <div className="relative z-10 pt-12 pb-0 px-8 md:px-12 flex flex-col items-center">
 
                     {/* Centered Heading */}
@@ -36,8 +50,16 @@ export default function OpportunityReport() {
                     </h3>
 
                     {/* Centered Input Form */}
-                    <div className="w-full max-w-xl bg-white rounded-2xl p-1.5 flex flex-col sm:flex-row gap-2 shadow-2xl mb-8 transform hover:scale-[1.01] transition-transform duration-300 relative z-20">
-                        <div className="flex-1 flex items-center px-4 relative">
+                    <div className="w-full max-w-xl bg-white rounded-2xl p-1.5 flex flex-col sm:flex-row gap-2 shadow-2xl mb-8 transform hover:scale-[1.01] transition-transform duration-300 relative z-20 overflow-hidden">
+
+                        {/* Internal Scan for Input */}
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-500/10 to-transparent skews-x-12"
+                            animate={{ x: ["-100%", "200%"] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
+                        />
+
+                        <div className="flex-1 flex items-center px-4 relative z-10">
                             {/* Globe Icon */}
                             <svg className="w-5 h-5 text-gray-400 mr-3 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 9-9s9 9 9 9z"></path></svg>
                             <input
@@ -46,7 +68,7 @@ export default function OpportunityReport() {
                                 className="w-full py-2.5 text-gray-900 border-none outline-none bg-transparent placeholder-gray-500 text-sm"
                             />
                         </div>
-                        <button className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md text-sm whitespace-nowrap">
+                        <button className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md text-sm whitespace-nowrap z-10">
                             Generate Free Report
                         </button>
                     </div>

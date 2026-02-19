@@ -95,11 +95,39 @@ body::before {
     background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
     transform: skewX(-25deg);
     transition: 0.5s;
+    pointer-events: none;
   }
 
   .hover-card-shine:hover::after {
     left: 150%;
     transition: 0.7s;
+  }
+
+  /* Enhanced Glow Effect */
+  .hover-card-glow {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .hover-card-glow::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, var(--color-brand-500), transparent, var(--color-brand-500));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .hover-card-glow:hover::before {
+    opacity: 0.6;
+  }
+
+  .hover-card-glow:hover {
+    box-shadow: 0 0 20px -5px var(--color-brand-500);
+    border-color: transparent;
   }
 }
 
