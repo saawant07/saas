@@ -198,3 +198,43 @@ body::before {
     transform: translateX(-50%);
   }
 }
+
+@keyframes scanBeam {
+
+  0%,
+  100% {
+    top: 0%;
+  }
+
+  50% {
+    top: 100%;
+  }
+}
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px 2px rgba(249, 115, 22, 0.15);
+  }
+
+  50% {
+    box-shadow: 0 0 25px 6px rgba(249, 115, 22, 0.3);
+  }
+}
+
+@layer utilities {
+  .animate-scan-beam {
+    animation: scanBeam 4s ease-in-out infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+
+  .frosted-glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  }
+}

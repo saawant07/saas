@@ -1,12 +1,14 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { useState } from "react";
+import { Check, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import MagneticButton from "./ui/MagneticButton";
 
 const plans = [
     {
         name: "Starter",
+        slug: "starter",
         price: "$29",
         period: "/month",
         description: "Perfect for individuals and small projects.",
@@ -15,6 +17,7 @@ const plans = [
     },
     {
         name: "Professional",
+        slug: "pro",
         price: "$99",
         period: "/month",
         description: "For growing teams that need more power.",
@@ -30,6 +33,7 @@ const plans = [
     },
     {
         name: "Enterprise",
+        slug: "enterprise",
         price: "$299",
         period: "/month",
         description: "Advanced features for large scale operations.",
@@ -46,6 +50,29 @@ const plans = [
 ];
 
 export default function Pricing() {
+    const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+    const handleCheckout = async (slug: string) => {
+        setLoadingPlan(slug);
+        try {
+            const res = await fetch("/api/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ plan: slug }),
+            });
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert(data.error || "Something went wrong. Please try again.");
+                setLoadingPlan(null);
+            }
+        } catch {
+            alert("Network error. Please check your connection and try again.");
+            setLoadingPlan(null);
+        }
+    };
+
     return (
         <section id="pricing" className="py-24 bg-transparent dark:bg-black">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,12 +113,20 @@ export default function Pricing() {
                             </div>
 
                             <MagneticButton
+                                onClick={() => handleCheckout(plan.slug)}
                                 className={`w-full py-3 rounded-lg font-medium transition-all duration-300 mb-8 transform ${plan.highlighted
                                     ? "bg-brand-600 hover:bg-brand-700 text-white shadow-lg hover:shadow-brand-500/25"
                                     : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-brand-500 hover:text-brand-600 text-gray-900 dark:text-white"
                                     }`}
                             >
-                                Get Started
+                                {loadingPlan === plan.slug ? (
+                                    <span className="flex items-center justify-center gap-2">
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                        Redirecting...
+                                    </span>
+                                ) : (
+                                    "Get Started"
+                                )}
                             </MagneticButton>
 
                             <ul className="space-y-4">
