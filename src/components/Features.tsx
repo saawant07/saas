@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Sparkles, TrendingUp, BarChart, Users, Share2, Activity, ShieldCheck, Zap } from "lucide-react";
+import { Search, Sparkles, TrendingUp, BarChart, Users, Share2, Activity, ShieldCheck, Zap, User } from "lucide-react";
 import SpotlightCard from "./ui/SpotlightCard";
 
 export default function Features() {
@@ -39,7 +39,7 @@ export default function Features() {
                                     <div key={i} className="bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-100 dark:border-white/5 rounded-lg p-3 transition-colors flex flex-col justify-between group/item cursor-default">
                                         <div className="flex justify-between items-start mb-2">
                                             <span className="text-xs font-bold text-gray-700 dark:text-gray-300">{sub}</span>
-                                            <div className={`w-2 h-2 rounded-full ${i < 3 ? 'bg-green-500 animate-pulse' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
+                                            <div className={`w-2 h-2 rounded-full ${i < 3 ? 'bg-brand-500 animate-pulse' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
                                         </div>
                                         <div className="text-[10px] text-gray-500 flex justify-between">
                                             <span>Active</span>
@@ -83,8 +83,8 @@ export default function Features() {
                     <SpotlightCard className="md:col-span-2 rounded-3xl p-8 bg-white dark:bg-white/5 backdrop-blur-xl border-gray-200 dark:border-white/10 flex flex-col justify-between shadow-sm dark:shadow-none">
                         <div>
                             <div className="flex items-center space-x-2 mb-4">
-                                <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                                <span className="text-sm font-mono text-purple-600 dark:text-purple-400 uppercase tracking-widest">AI SEO</span>
+                                <Sparkles className="h-5 w-5 text-brand-500 dark:text-brand-400" />
+                                <span className="text-sm font-mono text-brand-600 dark:text-brand-400 uppercase tracking-widest">AI SEO</span>
                             </div>
                             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">LLM Trust Score</h3>
                             <p className="text-gray-600 dark:text-gray-400 text-sm">Rank where ChatGPT looks.</p>
@@ -92,9 +92,9 @@ export default function Features() {
 
                         <div className="mt-6 flex items-center justify-center relative">
                             <div className="text-5xl font-bold text-gray-900 dark:text-white tracking-tighter">98<span className="text-2xl text-gray-400 dark:text-gray-500">%</span></div>
-                            <div className="absolute inset-0 bg-purple-500/10 dark:bg-purple-500/20 blur-2xl rounded-full"></div>
+                            <div className="absolute inset-0 bg-brand-500/10 dark:bg-brand-500/20 blur-2xl rounded-full"></div>
                         </div>
-                        <div className="text-center text-xs text-purple-700 dark:text-purple-300 mt-2 font-mono">High Confidence Verification</div>
+                        <div className="text-center text-xs text-brand-700 dark:text-brand-300 mt-2 font-mono">High Confidence Verification</div>
                     </SpotlightCard>
 
                     {/* Card 4: Opportunity Discovery (Large, Col-span-4) */}
@@ -108,8 +108,8 @@ export default function Features() {
                                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Opportunity Discovery Engine</h3>
                                 <p className="text-gray-600 dark:text-gray-400 mb-6">Uncover fresh discussions where users are actively asking for a solution like yours, before your competitors even know they exist.</p>
                                 <div className="flex items-center text-sm text-gray-500 space-x-4">
-                                    <span className="flex items-center"><div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>Real-time</span>
-                                    <span className="flex items-center"><div className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2"></div>High Intent</span>
+                                    <span className="flex items-center"><div className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2"></div>Real-time</span>
+                                    <span className="flex items-center"><div className="w-1.5 h-1.5 border border-brand-500 rounded-full mr-2"></div>High Intent</span>
                                 </div>
                             </div>
 
@@ -125,7 +125,7 @@ export default function Features() {
                                     </div>
                                     <div className="flex items-start space-x-3 bg-white dark:bg-white/5 p-3 rounded-lg border border-brand-200 dark:border-brand-500/30 relative shadow-sm dark:shadow-none">
                                         <div className="absolute -left-1 top-4 w-1 h-8 bg-brand-500 rounded-full"></div>
-                                        <div className="w-6 h-6 rounded-full bg-indigo-500"></div>
+                                        <div className="w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center"><User className="w-4 h-4 text-brand-600" /></div>
                                         <div className="space-y-1.5">
                                             <div className="h-2 w-24 bg-gray-200 dark:bg-gray-600 rounded"></div>
                                             <div className="text-xs text-gray-600 dark:text-gray-300">"Does anyone know an alternative to [Competitor] that supports..."</div>

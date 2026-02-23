@@ -27,6 +27,11 @@
   --foreground: #171717;
 }
 
+.dark {
+  --background: #000000;
+  --foreground: #ededed;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -43,6 +48,11 @@ body::before {
   z-index: -50;
   background: radial-gradient(circle at 50% 0%, #fff7ed 0%, #ffffff 60%), #ffffff;
   pointer-events: none;
+  transition: background 0.3s ease;
+}
+
+.dark body::before {
+  background: radial-gradient(circle at 50% 0%, #1a0800 0%, #000000 60%), #000000;
 }
 
 @layer utilities {

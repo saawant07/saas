@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Loader2, ArrowRight, MessageSquare, ThumbsUp, TrendingUp, AlertCircle, CheckCircle2, Radar } from "lucide-react";
 import { MOCK_DATA, RedditThread } from "@/lib/mock-data";
@@ -10,7 +11,15 @@ export default function RedditScanner() {
     const [status, setStatus] = useState<'idle' | 'scanning' | 'results'>('idle');
     const [results, setResults] = useState<RedditThread[]>([]);
 
+    const { isSignedIn } = useAuth();
+    const { openSignIn } = useClerk();
+
     const handleScan = () => {
+        if (!isSignedIn) {
+            openSignIn();
+            return;
+        }
+
         if (!query.trim()) return;
 
         setStatus('scanning');
@@ -240,15 +249,15 @@ export default function RedditScanner() {
                                                             {thread.subreddit}
                                                         </span>
                                                         <span className={`text-[10px] font-bold px-2.5 py-1 rounded-lg flex items-center space-x-1.5
-                                                            ${thread.status === 'Hot' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
+                                                            ${thread.status === 'Hot' ? 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-500/20' : 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-500/20'}`}>
                                                             <TrendingUp className="h-3 w-3" />
                                                             <span>{thread.status}</span>
                                                         </span>
                                                     </div>
                                                     <div className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border flex items-center
                                                         ${thread.intent === 'High'
-                                                            ? 'bg-green-50 text-green-700 border-green-200'
-                                                            : 'bg-yellow-50 text-yellow-700 border-yellow-200'}`}>
+                                                            ? 'bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 border-brand-200 dark:border-brand-500/20'
+                                                            : 'bg-yellow-50 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-500/20'}`}>
                                                         {thread.intent} Intent
                                                     </div>
                                                 </div>
@@ -268,16 +277,22 @@ export default function RedditScanner() {
                                                             <span className="font-medium">{thread.comments}</span>
                                                         </div>
                                                     </div>
-                                                    <div className="text-brand-600 font-bold opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0 flex items-center text-xs uppercase tracking-wide">
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); if (!isSignedIn) openSignIn(); else alert('Generative AI reply feature unlocked!'); }}
+                                                        className="text-brand-600 font-bold opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0 flex items-center text-xs uppercase tracking-wide"
+                                                    >
                                                         Generate Reply <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
-                                                    </div>
+                                                    </button>
                                                 </div>
                                             </motion.div>
                                         ))}
                                     </div>
 
                                     <div className="pt-4 border-t border-gray-100 dark:border-gray-800 text-center">
-                                        <button className="text-sm font-bold text-brand-600 hover:text-brand-700 hover:underline inline-flex items-center">
+                                        <button
+                                            onClick={() => { if (!isSignedIn) openSignIn(); else document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}
+                                            className="text-sm font-bold text-brand-600 hover:text-brand-700 hover:underline inline-flex items-center"
+                                        >
                                             Unlock full analysis & automation <ArrowRight className="ml-1 h-3 w-3" />
                                         </button>
                                     </div>

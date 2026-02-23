@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton";
-import { BackgroundBeams } from "@/components/ui/BackgroundBeams";
+import { useAuth, useClerk } from "@clerk/nextjs";
 
 export default function CTA() {
+    const { isSignedIn } = useAuth();
+    const { openSignIn } = useClerk();
+
     return (
         <section className="py-32 bg-white dark:bg-black relative overflow-hidden flex flex-col items-center justify-center border-t border-gray-100 dark:border-gray-800">
-            {/* Background Beams */}
-            <BackgroundBeams className="opacity-40" />
 
             {/* Subtle radial gradient background - Restored for theme */}
             <div className="absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 bg-brand-500/20 dark:bg-brand-900/10 -z-10 rounded-full blur-[100px] w-[600px] h-[600px] pointer-events-none"></div>
@@ -23,7 +24,10 @@ export default function CTA() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                    <MagneticButton className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-10 py-4 rounded-full text-lg font-bold transition-all shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 hover:scale-105 active:scale-95 group">
+                    <MagneticButton
+                        onClick={() => { if (!isSignedIn) openSignIn(); else document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}
+                        className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-10 py-4 rounded-full text-lg font-bold transition-all shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 hover:scale-105 active:scale-95 group"
+                    >
                         Start Growth Engine
                     </MagneticButton>
 

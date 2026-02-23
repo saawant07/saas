@@ -1,6 +1,8 @@
 "use client";
 
 import { TrendingUp, CheckCircle } from "lucide-react";
+import { useAuth, useClerk } from "@clerk/nextjs";
+import { DashboardHoverCard } from "@/components/ui/DashboardHoverCard";
 
 const logos = [
     { name: "Stripe", url: "https://cdn.simpleicons.org/stripe" },
@@ -14,6 +16,9 @@ const logos = [
 ];
 
 export default function SocialProof() {
+    const { isSignedIn } = useAuth();
+    const { openSignIn } = useClerk();
+
     return (
         <section className="py-24 bg-transparent dark:bg-black overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
@@ -98,7 +103,10 @@ export default function SocialProof() {
                             ))}
                         </ul>
 
-                        <button className="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3 rounded-lg font-bold shadow-lg transition-transform hover:-translate-y-1">
+                        <button
+                            onClick={() => { if (!isSignedIn) openSignIn(); else document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}
+                            className="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3 rounded-lg font-bold shadow-lg transition-transform hover:-translate-y-1"
+                        >
                             Start Your Growth Journey →
                         </button>
                     </div>
@@ -113,21 +121,9 @@ export default function SocialProof() {
                                 </div>
                             </div>
 
-                            {/* CSS Chart Visualization */}
-                            <div className="h-64 relative flex items-end space-x-1 group-hover:scale-[1.02] transition-transform duration-500">
-                                {/* Simple SVG/CSS representation of exponential growth */}
-                                <svg viewBox="0 0 100 50" className="w-full h-full text-brand-500 fill-current opacity-10 absolute bottom-0 animate-pulse-slow">
-                                    <path d="M0,50 L10,48 L20,45 L30,45 L40,40 L50,20 L60,25 L70,15 L80,20 L90,5 L100,0 L100,50 Z" />
-                                </svg>
-                                <svg viewBox="0 0 100 50" className="w-full h-full text-brand-600 stroke-current stroke-2 fill-none absolute bottom-0 z-10 drop-shadow-lg">
-                                    <path d="M0,50 L10,48 L20,45 L30,45 L40,40 L50,20 L60,25 L70,15 L80,20 L90,5 L100,0" vectorEffect="non-scaling-stroke" />
-                                </svg>
-
-                                {/* Data Points */}
-                                <div className="absolute top-1/2 left-10 bg-white shadow-md p-2 rounded border border-gray-100 text-[10px]">
-                                    <span className="font-bold">Start</span><br />
-                                    <span className="text-red-500">0 Views</span>
-                                </div>
+                            {/* 3D Magnetic Dashboard Showcase */}
+                            <div className="w-full">
+                                <DashboardHoverCard />
                             </div>
 
                             <div className="flex justify-between text-xs text-gray-400 mt-4">
@@ -164,17 +160,17 @@ export default function SocialProof() {
 
                         {/* Bar Chart Items */}
                         {[
-                            { name: "reddit.com", val: "Top Tier", color: "bg-gradient-to-r from-brand-300 to-brand-500", icon: "https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" },
-                            { name: "wikipedia.org", val: "High", color: "bg-gray-100 dark:bg-gray-800", textColor: "text-gray-600", icon: "https://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo-transparent.png" },
-                            { name: "youtube.com", val: "Medium", color: "bg-gray-100 dark:bg-gray-800", textColor: "text-gray-600", icon: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" }
+                            { name: "reddit.com", val: "Top Tier", color: "bg-gradient-to-r from-brand-400 to-brand-600", icon: "https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" },
+                            { name: "wikipedia.org", val: "High", color: "bg-brand-50 dark:bg-brand-900/20", textColor: "text-brand-700 dark:text-brand-300", icon: "https://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo-transparent.png" },
+                            { name: "youtube.com", val: "Medium", color: "bg-brand-50/50 dark:bg-brand-900/10", textColor: "text-brand-600 dark:text-brand-400", icon: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" }
                         ].map((item, i) => (
                             <div key={i} className={`relative rounded-xl overflow-hidden h-16 flex items-center px-4 ${item.color}`}>
                                 <div className="flex items-center space-x-4 z-10 w-full justify-between">
                                     <div className="flex items-center space-x-3">
                                         <img src={item.icon} className="w-8 h-8 object-contain" alt={item.name} />
-                                        <span className={`font-bold ${i === 0 ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}>{item.name}</span>
+                                        <span className={`font-bold ${i === 0 ? 'text-white' : item.textColor}`}>{item.name}</span>
                                     </div>
-                                    <span className={`font-bold text-xl ${i === 0 ? 'text-white' : 'text-gray-500'}`}>{item.val}</span>
+                                    <span className={`font-bold text-xl ${i === 0 ? 'text-white' : item.textColor}`}>{item.val}</span>
                                 </div>
                             </div>
                         ))}

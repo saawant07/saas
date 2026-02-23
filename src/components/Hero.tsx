@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, CheckCircle, Star, TrendingUp, Activity, BarChart3, Eye, MousePointerClick, Zap } from "lucide-react";
+import { Target, CheckCircle, Star, TrendingUp, Activity, BarChart3, Eye, MousePointerClick, Zap } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useAuth, useClerk } from "@clerk/nextjs";
+import { WorldGlobe } from "@/components/ui/WorldGlobe";
 
 function AnimatedCounter({ target, duration = 2000, prefix = "", suffix = "" }: { target: number; duration?: number; prefix?: string; suffix?: string }) {
     const [count, setCount] = useState(0);
@@ -47,7 +49,81 @@ function MiniBarChart() {
     );
 }
 
+function TypingText({ text, delay = 0 }: { text: string; delay?: number }) {
+    const [displayed, setDisplayed] = useState("");
+    const [started, setStarted] = useState(false);
+
+    useEffect(() => {
+        const startTimer = setTimeout(() => setStarted(true), delay);
+        return () => clearTimeout(startTimer);
+    }, [delay]);
+
+    useEffect(() => {
+        if (!started) return;
+        let i = 0;
+        const timer = setInterval(() => {
+            i++;
+            setDisplayed(text.slice(0, i));
+            if (i >= text.length) clearInterval(timer);
+        }, 30);
+        return () => clearInterval(timer);
+    }, [started, text]);
+
+    return (
+        <span>
+            {displayed}
+            {displayed.length < text.length && (
+                <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                    className="inline-block w-[2px] h-[1em] bg-brand-500 ml-0.5 align-middle"
+                />
+            )}
+        </span>
+    );
+}
+
+function CursorGlow() {
+    const [pos, setPos] = useState({ x: 0, y: 0 });
+    const [visible, setVisible] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleMove = (e: MouseEvent) => {
+            if (!ref.current) return;
+            const rect = ref.current.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                setPos({ x, y });
+                setVisible(true);
+            } else {
+                setVisible(false);
+            }
+        };
+        window.addEventListener("mousemove", handleMove);
+        return () => window.removeEventListener("mousemove", handleMove);
+    }, []);
+
+    return (
+        <div ref={ref} className="absolute inset-0 -z-5 pointer-events-none overflow-hidden">
+            <div
+                className="absolute w-[400px] h-[400px] rounded-full transition-opacity duration-300"
+                style={{
+                    left: pos.x - 200,
+                    top: pos.y - 200,
+                    background: "radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%)",
+                    opacity: visible ? 1 : 0,
+                }}
+            />
+        </div>
+    );
+}
+
 export default function Hero() {
+    const { isSignedIn } = useAuth();
+    const { openSignIn } = useClerk();
+
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -67,12 +143,6 @@ export default function Hero() {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, [handleMouseMove]);
 
-    const liveThreads = [
-        { r: "r/SaaS", title: "Best organic marketing tools?", intent: "High", time: "2m ago", score: 94 },
-        { r: "r/Entrepreneur", title: "How to validate my idea?", intent: "Medium", time: "5m ago", score: 78 },
-        { r: "r/Marketing", title: "Reddit vs FB Ads for B2B?", intent: "High", time: "12m ago", score: 91 },
-    ];
-
     const subredditData = [
         { name: "r/SaaS", posts: "2.4k", growth: "+18%" },
         { name: "r/startups", posts: "1.8k", growth: "+12%" },
@@ -91,6 +161,8 @@ export default function Hero() {
 
     return (
         <section className="relative pt-32 pb-12 lg:pt-48 lg:pb-20 overflow-hidden">
+            {/* Cursor Glow */}
+            <CursorGlow />
             {/* Background Gradients */}
             <div className="absolute inset-0 -z-10 pointer-events-none">
                 <motion.div
@@ -125,7 +197,10 @@ export default function Hero() {
                             Turn Reddit Conversations into <span className="text-brand-600">High-Intent Customers</span>
                         </h1>
                         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
-                            Stop shouting into the void. HardCoded intelligently places your product in relevant Reddit discussions that rank on Google, driving qualified organic traffic on autopilot.
+                            <TypingText
+                                text="Stop shouting into the void. HardCoded intelligently places your product in relevant Reddit discussions that rank on Google, driving qualified organic traffic on autopilot."
+                                delay={800}
+                            />
                         </p>
 
                         <ul className="space-y-3 pt-2">
@@ -145,117 +220,35 @@ export default function Hero() {
                         </ul>
 
                         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 pt-6">
-                            <Link
-                                href="#get-started"
+                            <button
+                                onClick={() => { if (!isSignedIn) openSignIn(); else document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}
                                 className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-xl shadow-brand-500/20 hover:shadow-brand-500/40 hover:-translate-y-1 text-center"
                             >
                                 Start Your Growth Engine
-                            </Link>
+                            </button>
                             <Link
                                 href="#how-it-works"
                                 className="w-full sm:w-auto bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center group backdrop-blur-sm"
                             >
                                 <span>See how it works</span>
-                                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform text-brand-500" />
+                                <Target className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform text-brand-500" />
                             </Link>
                         </div>
                     </div>
 
                     {/* Right Column: Live Campaign Engine */}
-                    <div className="flex-1 w-full max-w-md lg:max-w-[560px] relative" style={{ perspective: "1200px" }}>
+                    <div className="flex-1 w-full max-w-md lg:max-w-[560px] relative mt-16 lg:mt-0" style={{ perspective: "1200px" }}>
                         {/* Background glow */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-brand-500/10 rounded-full blur-[100px] -z-10 dark:bg-brand-900/20"></div>
 
-                        {/* ====== MAIN DASHBOARD PANEL ====== */}
+                        {/* ====== 3D INTERACTIVE GLOBE ====== */}
                         <motion.div
-                            initial={{ opacity: 0, y: 40, rotateX: 12 }}
-                            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                            transition={{ duration: 0.9, ease: "easeOut" }}
-                            className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-white/30 dark:border-gray-800 rounded-3xl shadow-2xl overflow-hidden"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                            className="relative z-10 w-full"
                         >
-                            {/* Scanning Beam */}
-                            <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-3xl">
-                                <motion.div
-                                    className="absolute top-0 left-0 w-full h-[2px]"
-                                    style={{
-                                        background: "linear-gradient(90deg, transparent 0%, #f97316 30%, #fb923c 50%, #f97316 70%, transparent 100%)",
-                                        boxShadow: "0 0 20px 4px rgba(249, 115, 22, 0.4), 0 0 60px 10px rgba(249, 115, 22, 0.15)",
-                                    }}
-                                    animate={{ top: ["0%", "100%", "0%"] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                />
-                            </div>
-
-                            {/* Dashboard Header */}
-                            <div className="px-5 py-3.5 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-white/50 dark:bg-black/20">
-                                <div className="flex items-center space-x-2">
-                                    <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                                    <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                    <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                                </div>
-                                <div className="text-[10px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
-                                    <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
-                                    </span>
-                                    Live Campaign Engine
-                                </div>
-                            </div>
-
-                            {/* Subreddit Analytics Section */}
-                            <div className="px-5 pt-4">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-7 h-7 rounded-lg bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center">
-                                            <BarChart3 className="w-4 h-4 text-brand-600" />
-                                        </div>
-                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">Subreddit Analytics</span>
-                                    </div>
-                                    <span className="text-[10px] text-gray-400 font-mono">Last 7 days</span>
-                                </div>
-                                <MiniBarChart />
-                                <div className="flex justify-between mt-2 text-[9px] text-gray-400 font-mono">
-                                    {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(day => (
-                                        <span key={day}>{day}</span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Live Threads Feed */}
-                            <div className="px-5 pt-4 pb-5">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <div className="w-7 h-7 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
-                                        <Activity className="w-4 h-4 text-green-600" />
-                                    </div>
-                                    <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">Live Thread Feed</span>
-                                </div>
-                                <div className="space-y-2.5">
-                                    {liveThreads.map((thread, i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: 0.5 + i * 0.15 }}
-                                            className="group flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-700/40 hover:border-brand-200 dark:hover:border-brand-800/50 transition-all cursor-pointer"
-                                        >
-                                            <div className="w-8 h-8 rounded-full bg-brand-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 text-brand-600">
-                                                <span className="font-bold text-[10px]">r/</span>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex justify-between items-center mb-0.5">
-                                                    <span className="text-[10px] font-bold text-gray-400 uppercase">{thread.r} • {thread.time}</span>
-                                                    <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold ${thread.intent === 'High' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'}`}>
-                                                        {thread.score}% match
-                                                    </span>
-                                                </div>
-                                                <h4 className="text-xs font-semibold text-gray-800 dark:text-gray-200 truncate group-hover:text-brand-600 transition-colors">
-                                                    {thread.title}
-                                                </h4>
-                                            </div>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </div>
+                            <WorldGlobe />
                         </motion.div>
 
                         {/* ====== FLOATING AD PERFORMANCE CARD ====== */}

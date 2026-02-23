@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, MessageCircle, ChevronRight } from "lucide-react";
+import ThemeToggle from "./ui/ThemeToggle";
 import {
   SignInButton,
   SignedIn,
@@ -76,6 +77,7 @@ export default function Navbar() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
+            <ThemeToggle />
             <SignedOut>
               <SignInButton mode="modal">
                 <button className="px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-brand-600 transition-colors cursor-pointer">
@@ -104,6 +106,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-3">
+            <ThemeToggle />
             <SignedIn>
               <UserButton
                 afterSignOutUrl="/"
