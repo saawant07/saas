@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import Stripe from "stripe";
 
 function getStripe() {
@@ -22,6 +23,15 @@ const PLAN_AMOUNTS: Record<string, number> = {
 
 export async function POST(req: NextRequest) {
     try {
+        // Gate: require authenticated user
+        const { userId } = await auth();
+        if (!userId) {
+            return NextResponse.json(
+                { error: "You must be signed in to purchase a plan." },
+                { status: 401 }
+            );
+        }
+
         const body = await req.json();
         const { plan } = body as { plan: string };
 
@@ -63,6 +73,7 @@ export async function POST(req: NextRequest) {
             mode: "subscription",
             payment_method_types: ["card"],
             line_items: [lineItem],
+            metadata: { clerkUserId: userId },
             success_url: `${req.nextUrl.origin}/?checkout=success`,
             cancel_url: `${req.nextUrl.origin}/?checkout=cancel`,
         });

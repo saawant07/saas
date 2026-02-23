@@ -3,6 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, MessageCircle, ChevronRight } from "lucide-react";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,23 +76,44 @@ export default function Navbar() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link
-              href="#login"
-              className="px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-brand-600 transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              href="#get-started"
-              className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-gray-900/10 hover:shadow-gray-900/20 hover:-translate-y-0.5 flex items-center group"
-            >
-              Get Started
-              <ChevronRight className="w-4 h-4 ml-1 opacity-70 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-brand-600 transition-colors cursor-pointer">
+                  Login
+                </button>
+              </SignInButton>
+              <Link
+                href="#pricing"
+                className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-gray-900/10 hover:shadow-gray-900/20 hover:-translate-y-0.5 flex items-center group"
+              >
+                Get Started
+                <ChevronRight className="w-4 h-4 ml-1 opacity-70 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    avatarBox: "w-9 h-9 ring-2 ring-brand-500/20 hover:ring-brand-500/40 transition-all",
+                  },
+                }}
+              />
+            </SignedIn>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-3">
+            <SignedIn>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    avatarBox: "w-8 h-8 ring-2 ring-brand-500/20",
+                  },
+                }}
+              />
+            </SignedIn>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors focus:outline-none"
@@ -111,20 +138,23 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="pt-4 space-y-3 px-2">
-            <Link
-              href="#login"
-              className="block w-full text-center text-gray-900 dark:text-white font-semibold px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="#get-started"
-              className="block w-full text-center bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-xl text-base font-bold transition-all shadow-lg"
-              onClick={() => setIsOpen(false)}
-            >
-              Get Started
-            </Link>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button
+                  className="block w-full text-center text-gray-900 dark:text-white font-semibold px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Login
+                </button>
+              </SignInButton>
+              <Link
+                href="#pricing"
+                className="block w-full text-center bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-xl text-base font-bold transition-all shadow-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                Get Started
+              </Link>
+            </SignedOut>
           </div>
         </div>
       </div>

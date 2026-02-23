@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import MagneticButton from "./ui/MagneticButton";
 
 const plans = [
@@ -51,8 +52,18 @@ const plans = [
 
 export default function Pricing() {
     const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+    const { isSignedIn } = useAuth();
+    const { openSignIn } = useClerk();
 
     const handleCheckout = async (slug: string) => {
+        // Gate: must be signed in before purchasing
+        if (!isSignedIn) {
+            openSignIn({
+                fallbackRedirectUrl: "/#pricing",
+            });
+            return;
+        }
+
         setLoadingPlan(slug);
         try {
             const res = await fetch("/api/checkout", {
